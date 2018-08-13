@@ -6,11 +6,16 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 13:14:30 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/13 14:32:04 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/13 15:36:00 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
+
+int	handle_32(void *ptr)
+{
+
+}
 
 int	handle_64(void *ptr)
 {
