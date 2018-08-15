@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/13 13:36:46 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/15 14:11:19 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/15 11:47:03 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/15 11:47:11 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strdup(const char *s1)
 {
-	size_t	len;
+	char	*dup;
 
-	len = 0;
-	while (*(str++))
-		len++;
-	return (len);
+	if (!(dup = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1)))
+		return (NULL);
+	return (ft_strcpy(dup, s1));
 }

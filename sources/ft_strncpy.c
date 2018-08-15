@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/13 13:36:46 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/15 14:11:19 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/15 14:30:38 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/15 14:30:45 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	size_t	len;
+	char	*ptrdst;
 
-	len = 0;
-	while (*(str++))
-		len++;
-	return (len);
+	ptrdst = dst;
+	while (*src && len)
+	{
+		*(ptrdst++) = *(src++);
+		len--;
+	}
+	while (len)
+	{
+		*(ptrdst++) = 0;
+		len--;
+	}
+	return (dst);
 }

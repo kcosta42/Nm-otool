@@ -1,8 +1,12 @@
 {
   "editor.tabSize": 4,
   "editor.insertSpaces": false,
-  "files.associations": {
-    "*.tpp": "cpp",
-    "ft_nm.h": "c"
-  }
+"files.associations": {
+	"*.tpp": "cpp",
+	"ft_nm.h": "c",
+	"nlist.h": "c",
+	"loader.h": "c",
+	"fat.h": "c",
+	"stat.h": "c"
+}
 }

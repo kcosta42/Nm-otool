@@ -6,17 +6,21 @@
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/13 08:59:31 by kcosta            #+#    #+#              #
-#    Updated: 2018/08/13 14:26:10 by kcosta           ###   ########.fr        #
+#    Updated: 2018/08/15 14:38:57 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := ft_nm
 
 CC		:= gcc
-FLAGS	:= -Wall -Wextra -Werror
+FLAGS	:= -Wall -Wextra -Werror -g
 
-SRCS_FILES		:=	ft_nm.c	\
-					ft_strlen.c
+SRCS_FILES		:=	ft_nm.c			\
+					ft_strlen.c		\
+					ft_strcmp.c		\
+					ft_strcpy.c		\
+					ft_strncpy.c	\
+					ft_strdup.c
 
 HEADERS_FILES 	:=	ft_nm.h
 
