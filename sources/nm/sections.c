@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   sections.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/15 11:47:03 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/15 11:47:11 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/16 11:20:49 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/16 16:46:42 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-char	*ft_strdup(const char *s1)
+t_section	*sections(void)
 {
-	char	*dup;
+	static t_section	sections = {0, 0, 0, 0};
 
-	if (!(dup = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1)))
-		return (NULL);
-	return (ft_strcpy(dup, s1));
+	return (&sections);
+}
+
+void		reset_sections(void)
+{
+	sections()->index = 0;
+	sections()->text = 0;
+	sections()->data = 0;
+	sections()->bss = 0;
 }

@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/15 14:30:38 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/15 14:30:45 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/16 19:52:55 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/16 22:32:51 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
-char	*ft_strncpy(char *dst, const char *src, size_t len)
+int		ft_error(char *filename, char* msg, int errnum)
 {
-	char	*ptrdst;
-
-	ptrdst = dst;
-	while (*src && len)
-	{
-		*(ptrdst++) = *(src++);
-		len--;
-	}
-	while (len)
-	{
-		*(ptrdst++) = 0;
-		len--;
-	}
-	return (dst);
+	write(2, "./ft_otool: ", 9);
+	write(2, filename, ft_strlen(filename));
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	return errnum;
 }

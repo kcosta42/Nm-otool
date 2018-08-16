@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   sections.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/13 13:36:46 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/15 14:11:19 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/16 11:20:49 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/16 16:46:42 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-size_t	ft_strlen(const char *str)
+t_section	*sections(void)
 {
-	size_t	len;
+	static t_section	sections = {0, 0, 0, 0};
 
-	len = 0;
-	while (*(str++))
-		len++;
-	return (len);
+	return (&sections);
+}
+
+void		reset_sections(void)
+{
+	sections()->index = 0;
+	sections()->text = 0;
+	sections()->data = 0;
+	sections()->bss = 0;
 }

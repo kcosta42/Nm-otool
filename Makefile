@@ -5,50 +5,85 @@
 #                                                     +:+ +:+         +:+      #
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/08/13 08:59:31 by kcosta            #+#    #+#              #
-#    Updated: 2018/08/15 14:38:57 by kcosta           ###   ########.fr        #
+#    Created: 2018/08/16 19:08:49 by kcosta            #+#    #+#              #
+#    Updated: 2018/08/16 19:21:07 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := ft_nm
+# ========== Editable ========== #
+NM		:= ft_nm
+OTOOL	:= ft_otool
+# ============================== #
 
+# ========== Standard ========== #
 CC		:= gcc
-FLAGS	:= -Wall -Wextra -Werror -g
+FLAGS	:= -g -Wall -Wextra -Werror #-g -fsanitize=address
+# ============================== #
 
-SRCS_FILES		:=	ft_nm.c			\
-					ft_strlen.c		\
-					ft_strcmp.c		\
-					ft_strcpy.c		\
-					ft_strncpy.c	\
-					ft_strdup.c
+# =========== Files ============ #
+NM_SRCS_FILES		:=	ft_nm.c		\
+						utils.c		\
+						sections.c	\
+						ppc.c		\
+						archive.c	\
+						macho32.c	\
+						macho64.c	\
+						fat32.c		\
+						fat64.c		\
+						ft_utils.c
+OTOOL_SRCS_FILES	:=	ft_otool.c
 
-HEADERS_FILES 	:=	ft_nm.h
+NM_HEADERS_FILES	:=	ft_nm.h
+OTOOL_HEADERS_FILES	:=	ft_otool.h
+# ============================== #
 
-SRCS_PATH	:= sources/
-SRCS		:= $(addprefix $(SRCS_PATH), $(SRCS_FILES))
-OBJS_PATH	:= objs/
-OBJS		:= $(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.o))
+# ========== Sources =========== #
+NM_PATH		:= sources/nm/
+OTOOL_PATH	:= sources/otool/
+NM_SRCS		:= $(addprefix $(NM_PATH), $(NM_SRCS_FILES))
+OTOOL_SRCS	:= $(addprefix $(OTOOL_PATH), $(OTOOL_SRCS_FILES))
+# ============================== #
 
+# ========== Objects =========== #
+OBJS_PATH		:= objs/
+NM_OBJS_PATH	:= objs/nm/
+OTOOL_OBJS_PATH	:= objs/otool/
+NM_OBJS			:= $(addprefix $(NM_OBJS_PATH), $(NM_SRCS_FILES:.c=.o))
+OTOOL_OBJS 		:= $(addprefix $(OTOOL_OBJS_PATH), $(OTOOL_SRCS_FILES:.c=.o))
+# ============================== #
+
+# ========== Includes ========== #
 INCLUDES_PATH	:= includes/
 INCLUDES		:= -I $(INCLUDES_PATH)
-HEADERS			:= $(addprefix $(INCLUDES_PATH), $(HEADERS_FILES))
+NM_HEADERS		:= $(addprefix $(INCLUDES_PATH), $(NM_HEADERS_FILES))
+OTOOL_HEADERS	:= $(addprefix $(INCLUDES_PATH), $(OTOOL_HEADERS_FILES))
+# ============================== #
 
 .PHONY: all clean fclean re
 
-all: $(NAME)
+all: $(NM) $(OTOOL)
 
-$(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(HEADERS)
+$(NM_OBJS_PATH)%.o: $(NM_PATH)%.c $(NM_HEADERS)
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	@mkdir $(NM_OBJS_PATH) 2> /dev/null || true
 	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
 
-$(NAME): $(OBJS)
-	$(CC) $(FLAGS) -lncurses $(OBJS) -o $@
+$(OTOOL_OBJS_PATH)%.o: $(OTOOL_PATH)%.c $(OTOOL_HEADERS)
+	@mkdir $(OBJS_PATH) 2> /dev/null || true
+	@mkdir $(OTOOL_OBJS_PATH) 2> /dev/null || true
+	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+
+$(NM): $(NM_OBJS)
+	$(CC) $(FLAGS) $(NM_OBJS) -o $@
+
+$(OTOOL): $(OTOOL_OBJS)
+	$(CC) $(FLAGS) $(OTOOL_OBJS) -o $@
 
 clean:
-	@rm -fv $(OBJS)
+	@rm -fv $(NM_OBJS) $(OTOOL_OBJS)
 	@rmdir $(OBJS_PATH) 2> /dev/null || true
 
 fclean: clean
-	@rm -fv $(NAME)
+	@rm -fv $(NM) $(OTOOL)
 
 re: fclean all

@@ -1,24 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ppc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/15 11:46:39 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/15 14:11:23 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/16 16:46:44 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/16 16:52:45 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+static uint8_t	*get_ppc(void)
 {
-	char	*ptrdst;
+	static u_int8_t	ppc = 0;
 
-	ptrdst = dst;
-	while (*src)
-		*(ptrdst++) = *(src++);
-	*ptrdst = *src;
-	return (dst);
+	return (&ppc);
+}
+
+void			set_ppc(u_int8_t ppc)
+{
+	*get_ppc() = ppc;
+}
+
+uint32_t		ppc_32(uint32_t n)
+{
+	uint8_t	ppc;
+
+	ppc = *get_ppc();
+	if (ppc != 0)
+		return swap_uint32(n);
+	return (n);
+}
+
+uint64_t		ppc_64(uint64_t n)
+{
+	uint8_t	ppc;
+
+	ppc = *get_ppc();
+	if (ppc != 0)
+		return swap_uint64(n);
+	return (n);
 }
