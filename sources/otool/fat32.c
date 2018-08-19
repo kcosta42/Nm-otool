@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/16 14:52:16 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/18 16:21:53 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/18 16:55:32 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/18 17:07:47 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
 static int	is_hostarch(cpu_type_t type)
 {
@@ -43,7 +43,8 @@ int		handle_fat32(void *ptr, char *filename)
 			i == 0 ? write(1, PPC_STRING, ft_strlen(PPC_STRING)) \
 					: write(1, I386_STRING, ft_strlen(I386_STRING));
 		}
-		ft_nm(ptr + swap_uint32(arch[i].offset), filename, 0);
+		ft_otool(ptr + swap_uint32(arch[i].offset), nfat_arch > 1 \
+			&& !is_hostarch(swap_uint32(arch[i].cputype)) ? NULL : filename);
 		if (is_hostarch(swap_uint32(arch[i].cputype)))
 			return (EXIT_SUCCESS);
 	}

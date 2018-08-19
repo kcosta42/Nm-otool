@@ -6,19 +6,18 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 18:57:55 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 22:34:21 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/19 11:48:43 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
 
 
-int		ft_nm(void *ptr, char *filename)
+int		ft_otool(void *ptr, char *filename)
 {
 	uint32_t	magic;
 
 	magic = *(uint32_t *)ptr;
-	reset_sections();
 	if (magic == AR_MAGIC || magic == AR_CIGAM)
 		return (handle_archive(ptr, filename));
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)

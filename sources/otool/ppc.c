@@ -1,28 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sections.c                                         :+:      :+:    :+:   */
+/*   ppc.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/16 11:20:49 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 16:46:42 by kcosta           ###   ########.fr       */
+/*   Created: 2018/08/17 18:21:44 by kcosta            #+#    #+#             */
+/*   Updated: 2018/08/17 18:23:43 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
-t_section	*sections(void)
+uint8_t			*get_ppc(void)
 {
-	static t_section	sections = {0, 0, 0, 0};
+	static u_int8_t	ppc = 0;
 
-	return (&sections);
+	return (&ppc);
 }
 
-void		reset_sections(void)
+void			set_ppc(u_int8_t ppc)
 {
-	sections()->index = 0;
-	sections()->text = 0;
-	sections()->data = 0;
-	sections()->bss = 0;
+	*get_ppc() = ppc;
+}
+
+uint32_t		ppc_32(uint32_t n)
+{
+	uint8_t	ppc;
+
+	ppc = *get_ppc();
+	if (ppc != 0)
+		return swap_uint32(n);
+	return (n);
+}
+
+uint64_t		ppc_64(uint64_t n)
+{
+	uint8_t	ppc;
+
+	ppc = *get_ppc();
+	if (ppc != 0)
+		return swap_uint64(n);
+	return (n);
 }

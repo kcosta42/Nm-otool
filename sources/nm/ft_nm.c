@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 13:14:30 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 19:22:26 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/17 21:07:31 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	print_sections_symbols(t_symbol symbol, size_t len)
 {
-	if (symbol.type == N_ABS || symbol.type == N_INDR \
-	|| symbol.type == N_SECT)
+	if (symbol.type == N_ABS || symbol.type == N_SECT)
 		print_unsigned(symbol.value, 16, len);
 	if (symbol.type == N_ABS)
 		write(1, symbol.ext ? " A " : " a ", 3);
@@ -41,14 +40,19 @@ void	print_symbols(t_symbol symbol, size_t len)
 {
 	if (!ft_strcmp(symbol.name, ""))
 		return ;
-	if (symbol.type == N_UNDF && symbol.ext)
-	{
+	if ((symbol.type == N_UNDF || symbol.type == N_INDR) && symbol.ext)
 		write(1, "                ", len);
+	if (symbol.type == N_UNDF && symbol.ext)
 		write(1, symbol.ext ? " U " : " U ", 3);
-	}
 	else if (print_sections_symbols(symbol, len) == EXIT_FAILURE)
 		return ;
 	write(1, symbol.name, ft_strlen(symbol.name));
+	if (symbol.type == N_INDR)
+	{
+		write(1, " (indirect for ", 15);
+		write(1, symbol.name, ft_strlen(symbol.name));
+		write(1, ")", 1);
+	}
 	write(1, "\n", 1);
 }
 

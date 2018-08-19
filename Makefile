@@ -6,7 +6,7 @@
 #    By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/16 19:08:49 by kcosta            #+#    #+#              #
-#    Updated: 2018/08/16 19:21:07 by kcosta           ###   ########.fr        #
+#    Updated: 2018/08/19 11:59:03 by kcosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,15 @@ NM_SRCS_FILES		:=	ft_nm.c		\
 						fat32.c		\
 						fat64.c		\
 						ft_utils.c
-OTOOL_SRCS_FILES	:=	ft_otool.c
+OTOOL_SRCS_FILES	:=	ft_otool.c	\
+						utils.c		\
+						ppc.c		\
+						archive.c	\
+						macho32.c	\
+						macho64.c	\
+						fat32.c		\
+						fat64.c		\
+						ft_utils.c
 
 NM_HEADERS_FILES	:=	ft_nm.h
 OTOOL_HEADERS_FILES	:=	ft_otool.h

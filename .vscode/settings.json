@@ -9,6 +9,7 @@
 	"fat.h": "c",
 	"stat.h": "c",
 	"stdio.h": "c",
-	"ar.h": "c"
+	"ar.h": "c",
+	"ft_otool.h": "c"
 }
 }
