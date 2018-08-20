@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 13:14:30 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/20 10:34:47 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 13:21:58 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	print_sections_symbols(t_symbol symbol, size_t len)
 {
-	if (symbol.type == N_ABS || symbol.type == N_SECT)
+	if (symbol.type == N_ABS || symbol.type == N_SECT || symbol.type == N_INDR)
 		print_unsigned(symbol.value, 16, len);
 	if (symbol.type == N_ABS)
 		write(1, symbol.ext ? " A " : " a ", 3);
@@ -40,38 +40,32 @@ void		print_symbols(t_symbol symbol, size_t len)
 {
 	if (!ft_strcmp(symbol.name, ""))
 		return ;
-	if ((symbol.type == N_UNDF || symbol.type == N_INDR) && symbol.ext)
+	if ((symbol.type == N_UNDF) && symbol.ext)
 		write(1, "                ", len);
 	if (symbol.type == N_UNDF && symbol.ext)
 		write(1, symbol.ext ? " U " : " U ", 3);
 	else if (print_sections_symbols(symbol, len) == EXIT_FAILURE)
 		return ;
 	write(1, symbol.name, ft_strlen(symbol.name));
-	if (symbol.type == N_INDR)
-	{
-		write(1, " (indirect for ", 15);
-		write(1, symbol.name, ft_strlen(symbol.name));
-		write(1, ")", 1);
-	}
 	write(1, "\n", 1);
 }
 
-int			ft_nm(void *ptr, char *filename, uint8_t multi)
+int			ft_nm(void *ptr, char *filename, uint8_t multi, off_t size)
 {
 	uint32_t	magic;
 
 	magic = *(uint32_t *)ptr;
 	reset_sections();
 	if (magic == AR_MAGIC || magic == AR_CIGAM)
-		return (handle_archive(ptr, filename));
+		return (handle_archive(ptr, filename, size));
 	else if (magic == MH_MAGIC || magic == MH_CIGAM)
 		return (handle_macho32(ptr, multi ? filename : NULL));
 	else if (magic == MH_MAGIC_64 || magic == MH_CIGAM_64)
 		return (handle_macho64(ptr, multi ? filename : NULL));
 	else if (magic == FAT_MAGIC || magic == FAT_CIGAM)
-		return (handle_fat32(ptr, filename));
+		return (handle_fat32(ptr, filename, size));
 	else if (magic == FAT_MAGIC_64 || magic == FAT_CIGAM_64)
-		return (handle_fat64(ptr, filename));
+		return (handle_fat64(ptr, filename, size));
 	ft_error(filename, INV_OBJ_STRING, EXIT_FAILURE);
 	return (-1);
 }
@@ -94,7 +88,7 @@ int			proceed_file(char *filename, uint8_t multi)
 	ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 	if (ptr == MAP_FAILED)
 		return (EXIT_FAILURE);
-	ft_nm(ptr, filename, multi);
+	ft_nm(ptr, filename, multi, buf.st_size);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (EXIT_FAILURE);
 	if (close(fd) < 0)

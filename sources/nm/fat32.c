@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:52:16 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/20 10:30:27 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 13:16:32 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_hostarch(cpu_type_t type)
 	return (0);
 }
 
-int			handle_fat32(void *ptr, char *filename)
+int			handle_fat32(void *ptr, char *filename, off_t size)
 {
 	uint32_t			nfat;
 	uint32_t			i;
@@ -43,7 +43,7 @@ int			handle_fat32(void *ptr, char *filename)
 			i == 0 ? write(1, PPC_STRING, ft_strlen(PPC_STRING)) \
 					: write(1, I386_STRING, ft_strlen(I386_STRING));
 		}
-		ft_nm(ptr + swap_uint32(arch[i].offset), filename, 0);
+		ft_nm(ptr + swap_uint32(arch[i].offset), filename, 0, size);
 		if (is_hostarch(swap_uint32(arch[i].cputype)))
 			return (EXIT_SUCCESS);
 	}

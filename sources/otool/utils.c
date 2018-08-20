@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 19:52:55 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/20 10:45:31 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 13:32:16 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			ft_error(char *filename, char *msg, int errnum)
 {
-	write(2, "./ft_otool: ", 9);
+	write(2, "./ft_otool: ", 12);
 	write(2, filename, ft_strlen(filename));
 	write(2, ": ", 2);
 	write(2, msg, ft_strlen(msg));

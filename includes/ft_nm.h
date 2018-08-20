@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 13:11:36 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/20 10:22:22 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 13:16:45 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ typedef struct	s_section
 	uint32_t	bss;
 }				t_section;
 
-int				ft_nm(void *ptr, char *filename, uint8_t multi);
+int				ft_nm(void *ptr, char *filename, uint8_t multi, off_t size);
 
-int				handle_archive(void *ptr, char *filename);
+int				handle_archive(void *ptr, char *filename, off_t size);
 int				handle_macho32(void *ptr, char *filename);
 int				handle_macho64(void *ptr, char *filename);
-int				handle_fat32(void *ptr, char *filename);
-int				handle_fat64(void *ptr, char *filename);
+int				handle_fat32(void *ptr, char *filename, off_t size);
+int				handle_fat64(void *ptr, char *filename, off_t size);
 
 t_symbol		*sort_symbols(t_symbol *symbols, uint32_t size);
 

@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 11:39:17 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/20 10:24:10 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 13:16:13 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	print_archive_file_name(char *filename, char *symbol)
 	write(1, "):\n", 3);
 }
 
-int			handle_archive(void *ptr, char *filename)
+int			handle_archive(void *ptr, char *filename, off_t s)
 {
 	struct ar_hdr	*header;
 	char			*str;
@@ -36,11 +36,13 @@ int			handle_archive(void *ptr, char *filename)
 		if (ft_atoi(header->ar_size) <= 0)
 			return (EXIT_FAILURE);
 		str = ptr + sizeof(struct ar_hdr);
+		if (ptr + (ft_atoi(header->ar_size) + sizeof(struct ar_hdr)) > ptr + s)
+			return (EXIT_FAILURE);
 		print_archive_file_name(filename, str);
 		len = ft_strlen(str);
 		while (!str[len++])
 			;
-		ft_nm(ptr + sizeof(struct ar_hdr) + len - 1, filename, 0);
+		ft_nm(ptr + sizeof(struct ar_hdr) + len - 1, filename, 0, s);
 		ptr += ft_atoi(header->ar_size) + sizeof(struct ar_hdr);
 	}
 	return (EXIT_SUCCESS);
