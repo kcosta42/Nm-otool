@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 13:14:30 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/17 21:07:31 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 10:34:47 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	print_sections_symbols(t_symbol symbol, size_t len)
 	return (EXIT_SUCCESS);
 }
 
-void	print_symbols(t_symbol symbol, size_t len)
+void		print_symbols(t_symbol symbol, size_t len)
 {
 	if (!ft_strcmp(symbol.name, ""))
 		return ;
@@ -56,7 +56,7 @@ void	print_symbols(t_symbol symbol, size_t len)
 	write(1, "\n", 1);
 }
 
-int		ft_nm(void *ptr, char *filename, uint8_t multi)
+int			ft_nm(void *ptr, char *filename, uint8_t multi)
 {
 	uint32_t	magic;
 
@@ -76,7 +76,7 @@ int		ft_nm(void *ptr, char *filename, uint8_t multi)
 	return (-1);
 }
 
-int		proceed_file(char *filename, uint8_t multi)
+int			proceed_file(char *filename, uint8_t multi)
 {
 	int			fd;
 	struct stat	buf;
@@ -102,7 +102,7 @@ int		proceed_file(char *filename, uint8_t multi)
 	return (EXIT_SUCCESS);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	int		i;
 	char	*filename;
@@ -110,7 +110,7 @@ int		main(int ac, char **av)
 	if (ac < 2)
 		return (proceed_file("a.out", 0));
 	i = 1;
-	while(i < ac)
+	while (i < ac)
 	{
 		filename = av[i];
 		proceed_file(filename, ac > 2);

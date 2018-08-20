@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 10:57:04 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 18:33:15 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 10:35:03 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ t_symbol	*sort_symbols(t_symbol *symbols, uint32_t size)
 	return (symbols);
 }
 
-int			ft_error(char *filename, char* msg, int errnum)
+int			ft_error(char *filename, char *msg, int errnum)
 {
 	write(2, "./ft_nm: ", 9);
 	write(2, filename, ft_strlen(filename));
 	write(2, ": ", 2);
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
-	return errnum;
+	return (errnum);
 }
 
 void		print_unsigned(size_t addr, size_t base, size_t len)

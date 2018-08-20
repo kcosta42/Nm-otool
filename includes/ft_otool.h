@@ -6,14 +6,12 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 18:58:36 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/18 17:00:32 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 12:43:01 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_OTOOL_H
 # define FT_OTOOL_H
-
-#include <stdio.h>
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -43,15 +41,15 @@
 
 # define SYMBOL_SIZE 512
 
-int			ft_otool(void *ptr, char *filename);
+int			ft_otool(void *ptr, char *filename, off_t size);
 
-int			handle_archive(void *ptr, char *filename);
-int			handle_macho32(void *ptr, char *filename);
-int			handle_macho64(void *ptr, char *filename);
-int			handle_fat32(void *ptr, char *filename);
-int			handle_fat64(void *ptr, char *filename);
+int			handle_archive(void *ptr, char *filename, off_t size);
+int			handle_macho32(void *ptr, char *filename, off_t size);
+int			handle_macho64(void *ptr, char *filename, off_t size);
+int			handle_fat32(void *ptr, char *filename, off_t size);
+int			handle_fat64(void *ptr, char *filename, off_t size);
 
-int			ft_error(char *filename, char* msg, int errnum);
+int			ft_error(char *filename, char *msg, int errnum);
 
 void		print_unsigned(size_t addr, size_t base, size_t len);
 

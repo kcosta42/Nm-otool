@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 16:46:44 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 16:52:45 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 10:33:00 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ uint32_t		ppc_32(uint32_t n)
 
 	ppc = *get_ppc();
 	if (ppc != 0)
-		return swap_uint32(n);
+		return (swap_uint32(n));
 	return (n);
 }
 
@@ -40,6 +40,6 @@ uint64_t		ppc_64(uint64_t n)
 
 	ppc = *get_ppc();
 	if (ppc != 0)
-		return swap_uint64(n);
+		return (swap_uint64(n));
 	return (n);
 }

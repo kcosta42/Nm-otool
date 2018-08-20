@@ -6,19 +6,18 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 15:23:14 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/19 11:41:57 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 12:46:29 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
 
-static void	print_otool(void *ptr, uint64_t size, uint64_t start)
+static void	print_otool(void *ptr, off_t m_size, uint64_t size, uint64_t start)
 {
 	size_t	i;
 
 	i = 0;
-	printf("%llu -- %llu -- %llu\n", (uint64_t)ptr, size, start);
-	if (!ptr || !(ptr + size))
+	if (ptr + m_size < ptr + size)
 		return ;
 	while (i < size + ((size % 16) ? (16 - size % 16) : 0))
 	{
@@ -28,7 +27,7 @@ static void	print_otool(void *ptr, uint64_t size, uint64_t start)
 			write(1, "\t", 1);
 		}
 		if (i < size)
-			print_unsigned(0xff & ((char *)ptr)[i], 16, 2); // Culprit ?
+			print_unsigned(0xff & ((char *)ptr)[i], 16, 2);
 		if (!*get_ppc() && i < size)
 			write(1, " ", 1);
 		if (*get_ppc() && (i % 4 == 3) && i < size)
@@ -39,7 +38,7 @@ static void	print_otool(void *ptr, uint64_t size, uint64_t start)
 	}
 }
 
-static void	parse_segments_64(struct load_command *lc, void *ptr)
+static void	parse_segments_64(struct load_command *lc, void *ptr, off_t size)
 {
 	struct segment_command_64	*seg;
 	struct section_64			*sect;
@@ -54,13 +53,13 @@ static void	parse_segments_64(struct load_command *lc, void *ptr)
 			&& !ft_strcmp((sect + i)->segname, SEG_TEXT))
 		{
 			write(1, "Contents of (__TEXT,__text) section\n", 36);
-			print_otool(ptr + ppc_64((sect + i)->offset), \
+			print_otool(ptr + ppc_64((sect + i)->offset), size, \
 				ppc_64((sect + i)->size), ppc_64((sect + i)->addr));
 		}
 	}
 }
 
-int			handle_macho64(void *ptr, char *filename)
+int			handle_macho64(void *ptr, char *filename, off_t size)
 {
 	uint32_t					ncmds;
 	struct mach_header_64		*header;
@@ -77,7 +76,7 @@ int			handle_macho64(void *ptr, char *filename)
 	while (ncmds--)
 	{
 		if (ppc_64(lc->cmd) == LC_SEGMENT_64)
-			parse_segments_64(lc, ptr);
+			parse_segments_64(lc, ptr, size);
 		lc = (void*)lc + ppc_64(lc->cmdsize);
 	}
 	return (EXIT_SUCCESS);

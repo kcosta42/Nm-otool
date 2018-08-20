@@ -6,13 +6,13 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 11:39:17 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 15:00:02 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 10:24:10 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static void	print_archive_file_name(char *filename, char* symbol)
+static void	print_archive_file_name(char *filename, char *symbol)
 {
 	write(1, "\n", 1);
 	write(1, filename, ft_strlen(filename));

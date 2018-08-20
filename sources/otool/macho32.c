@@ -6,17 +6,19 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 15:18:38 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/18 16:42:35 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 12:46:27 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
 
-static void	print_otool(void *ptr, uint64_t size, uint64_t start)
+static void	print_otool(void *ptr, off_t m_size, uint64_t size, uint64_t start)
 {
 	size_t	i;
 
 	i = 0;
+	if (ptr + m_size < ptr + size)
+		return ;
 	while (i < size + ((size % 16) ? (16 - size % 16) : 0))
 	{
 		if (i % 16 == 0)
@@ -36,11 +38,11 @@ static void	print_otool(void *ptr, uint64_t size, uint64_t start)
 	}
 }
 
-static void	parse_segments_32(struct load_command *lc, void *ptr)
+static void	parse_segments_32(struct load_command *lc, void *ptr, off_t size)
 {
 	struct segment_command	*seg;
 	struct section			*sect;
-	uint32_t					i;
+	uint32_t				i;
 
 	seg = (struct segment_command *)lc;
 	sect = (struct section *)((void*)seg + sizeof(*seg));
@@ -51,17 +53,17 @@ static void	parse_segments_32(struct load_command *lc, void *ptr)
 			&& !ft_strcmp((sect + i)->segname, SEG_TEXT))
 		{
 			write(1, "Contents of (__TEXT,__text) section\n", 36);
-			print_otool(ptr + ppc_32((sect + i)->offset), \
+			print_otool(ptr + ppc_32((sect + i)->offset), size, \
 				ppc_32((sect + i)->size), ppc_32((sect + i)->addr));
 		}
 	}
 }
 
-int			handle_macho32(void *ptr, char *filename)
+int			handle_macho32(void *ptr, char *filename, off_t size)
 {
-	uint32_t					ncmds;
-	struct mach_header		*header;
-	struct load_command			*lc;
+	uint32_t			ncmds;
+	struct mach_header	*header;
+	struct load_command	*lc;
 
 	filename ? write(1, filename, ft_strlen(filename)) : 0;
 	filename ? write(1, ":\n", 2) : 0;
@@ -74,7 +76,7 @@ int			handle_macho32(void *ptr, char *filename)
 	while (ncmds--)
 	{
 		if (ppc_32(lc->cmd) == LC_SEGMENT)
-			parse_segments_32(lc, ptr);
+			parse_segments_32(lc, ptr, size);
 		lc = (void*)lc + ppc_32(lc->cmdsize);
 	}
 	return (EXIT_SUCCESS);

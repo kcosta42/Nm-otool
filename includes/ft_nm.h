@@ -6,7 +6,7 @@
 /*   By: kcosta <kcosta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 13:11:36 by kcosta            #+#    #+#             */
-/*   Updated: 2018/08/16 19:53:39 by kcosta           ###   ########.fr       */
+/*   Updated: 2018/08/20 10:22:22 by kcosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ uint64_t		ppc_64(uint64_t n);
 t_section		*sections(void);
 void			reset_sections(void);
 
-int				ft_error(char *filename, char* msg, int errnum);
+int				ft_error(char *filename, char *msg, int errnum);
 
 void			print_symbols(t_symbol symbol, size_t len);
 void			print_unsigned(size_t addr, size_t base, size_t len);
